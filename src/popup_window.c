@@ -212,10 +212,12 @@ static void app_timer_vibe_callback(void *data) {
       .durations = vibe_seg,
       .num_segments = ARRAY_LENGTH(vibe_seg),
     };
+
+    vibes_cancel();
     vibes_enqueue_custom_pattern(pat_vibe);
 
     --num_vibes_left;
-    s_app_timer = app_timer_register(2300, app_timer_vibe_callback, (void*)num_vibes_left);
+    s_app_timer = app_timer_register(15000, app_timer_vibe_callback, (void*)num_vibes_left);
   }
 }
 

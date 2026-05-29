@@ -110,7 +110,7 @@ static void app_timer_callback(void *data) {
 #else
     popup_window_set_pdc(s_popup_window, RESOURCE_ID_ICON_ALARM_CLOCK, true);
 #endif
-    popup_window_set_auto_close_duration(s_popup_window, 15000);
+    popup_window_set_auto_close_duration(s_popup_window, 46000);
     popup_window_add_action_bar(s_popup_window);
     popup_window_push(s_popup_window, true);
     popup_window_set_vibes();

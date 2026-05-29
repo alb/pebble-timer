@@ -45,6 +45,7 @@
 #include <pebble.h>
 #include "popup_window.h"
 #include "countdown_timer.h"
+#include "gcolor_definitions.h"
 
 /*******************************************************************************
  * CONSTANTS
@@ -277,11 +278,14 @@ static void prv_window_load(Window* window){
   layer_set_update_proc(popup_window->layer, layer_update_proc);
   layer_add_child(root, popup_window->layer);
   // text
-#ifndef PBL_PLATFORM_APLITE
+#if defined(PBL_PLATFORM_EMERY)
+  const int text_layer_origin_y = 165;
+#elif !defined(PBL_PLATFORM_APLITE)
   const int text_layer_origin_y = 125;
 #else
   const int text_layer_origin_y = 110;
 #endif
+
   popup_window->text = text_layer_create(GRect(0, text_layer_origin_y, bounds.size.w, 36));
   text_layer_set_font(popup_window->text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
   text_layer_set_text_alignment(popup_window->text, GTextAlignmentCenter);
@@ -337,7 +341,7 @@ static void prv_window_unload(Window* window){
  * API FUNCTIONS
  */
 
- 
+
 
 /*
  * create a new PopupWindow and return a pointer to it

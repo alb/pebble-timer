@@ -166,3 +166,6 @@ void menu_window_reload_data(MenuWindow *menu_window);
  */
 
 void menu_window_set_highlight_color(MenuWindow *menu_window, GColor color);
+
+
+void menu_window_pop(MenuWindow *menu_window, bool animated);

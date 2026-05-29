@@ -288,7 +288,7 @@ DetailWindow *detail_window_create(DetailWindowCallbacks detail_window_callbacks
   }
 
   *detail_window = (DetailWindow) { .callbacks = detail_window_callbacks };
-  
+
   return detail_window;
 }
 
@@ -322,6 +322,7 @@ void detail_window_push(DetailWindow *detail_window, bool animated) {
         .unload = prv_window_unload
       });
   }
+
   if (detail_window->window) {
     window_stack_push(detail_window->window, animated);
   }

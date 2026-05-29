@@ -25,6 +25,7 @@
 #define COUNTDOWN_TIMERS_MAX 8
 #define COUNTDOWN_TIMER_SNOOZE_DELAY 60000 // milliseconds
 #define TIMER_MIN_LENGTH 5000 // milliseconds
+#define QUICK_TIMER_LENGTH 300000
 #define TIMELINE_MIN_LENGTH 900000 // milliseconds
 #define INACTIVITY_THRESHOLD 900000 // length of time before refresh throttling in milliseconds
 #define INACTIVE_REFRESH_DELAY 1000 // ms between frames after throttling
@@ -462,6 +463,21 @@ static void initialize(void) {
         detail_window_deep_refresh(s_detail_window);
       }
     }
+  }
+
+  // if it's a quicklaunch set quick timer and show it and remove the main menu for easier back
+  if(launch_reason() == APP_LAUNCH_QUICK_LAUNCH) {
+    CountdownTimer* quick_timer = countdown_timer_create(QUICK_TIMER_LENGTH, &s_countdown_timer_id_max);
+    countdown_timer_list_add(s_countdown_timers, COUNTDOWN_TIMERS_MAX,
+      &s_countdown_timers_count, quick_timer);
+    countdown_timer_start(quick_timer);
+
+    detail_window_set_countdown_timer(s_detail_window, quick_timer);
+
+    detail_window_push(s_detail_window, true);
+    menu_window_pop(s_menu_window, false);
+
+    detail_window_deep_refresh(s_detail_window);
   }
 
   // open the setting screen if no timers

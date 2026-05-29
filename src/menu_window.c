@@ -358,3 +358,9 @@ void menu_window_reload_data(MenuWindow *menu_window) {
 void menu_window_set_highlight_color(MenuWindow *menu_window, GColor color) {
   menu_layer_set_highlight_colors(menu_window->menu, color, gcolor_legible_over(color));
 }
+
+void menu_window_pop(MenuWindow *menu_window, bool animated) {
+  if (menu_window && menu_window->window) {
+    window_stack_remove(menu_window->window, animated);
+  }
+}

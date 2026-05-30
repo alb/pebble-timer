@@ -59,6 +59,7 @@
 
 
 #include <pebble.h>
+#include <stdint.h>
 #include "countdown_timer.h"
 
 #define COUNTDOWN_TIMER_EXPIRED ((int64_t)-9223372036854775807LL - 1)
@@ -535,4 +536,22 @@ char *countdown_timer_format_own_buff(CountdownTimer *countdown_timer) {
 
 time_t countdown_timer_get_last_update(CountdownTimer *countdown_timer) {
   return countdown_timer->last_update;
+}
+
+CountdownTimer *countdown_timer_find_or_create(CountdownTimer **timer_array, uint8_t *timer_array_count, uint8_t timer_array_max, int64_t duration, int32_t *current_id_max) {
+  for (uint8_t ii = 0; ii < (*timer_array_count); ii++) {
+    if (
+      timer_array[ii]->start_ms == COUNTDOWN_TIMER_EXPIRED &&
+      countdown_timer_get_duration(timer_array[ii]) == duration
+    ) {
+      countdown_timer_update(timer_array[ii], duration, false);
+      return timer_array[ii];
+    }
+  }
+
+  CountdownTimer* timer = countdown_timer_create(duration, current_id_max);
+  countdown_timer_list_add(timer_array, timer_array_max,
+    timer_array_count, timer);
+
+  return timer;
 }

@@ -467,9 +467,14 @@ static void initialize(void) {
 
   // if it's a quicklaunch set quick timer and show it and remove the main menu for easier back
   if(launch_reason() == APP_LAUNCH_QUICK_LAUNCH) {
-    CountdownTimer* quick_timer = countdown_timer_create(QUICK_TIMER_LENGTH, &s_countdown_timer_id_max);
-    countdown_timer_list_add(s_countdown_timers, COUNTDOWN_TIMERS_MAX,
-      &s_countdown_timers_count, quick_timer);
+    CountdownTimer* quick_timer = countdown_timer_find_or_create(
+      s_countdown_timers,
+      &s_countdown_timers_count,
+      COUNTDOWN_TIMERS_MAX,
+      QUICK_TIMER_LENGTH,
+      &s_countdown_timer_id_max
+    );
+
     countdown_timer_start(quick_timer);
 
     detail_window_set_countdown_timer(s_detail_window, quick_timer);

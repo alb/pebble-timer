@@ -401,3 +401,5 @@ CountdownTimer *countdown_timer_list_get_closest_timer_after(CountdownTimer **ti
                                                        CountdownTimer *after_countdown_timer);
 
 time_t countdown_timer_get_last_update(CountdownTimer *countdown_timer);
+
+CountdownTimer *countdown_timer_find_or_create(CountdownTimer **timer_array, uint8_t *timer_array_count, uint8_t timer_array_max, int64_t duration, int32_t *current_id_max);
